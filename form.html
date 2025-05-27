@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LUMINOVA — Элитное освещение</title>
+  <style>
+    /* Основные стили */
+    :root {
+      --black: #000000;
+      --white: #FFFFFF;
+      --accent: #FEE7A4;
+      --accent-light: #FFF7DE;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--white);
+      color: var(--black);
+      overflow-x: hidden;
+    }
+
+    /* Навигация */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 20px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+
+    nav ul li {
+      margin-left: 30px;
+    }
+
+    nav ul li a {
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 300;
+      transition: color 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: var(--accent);
+    }
+
+    .cart-icon {
+      color: var(--white);
+      cursor: pointer;
+      position: relative;
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      background: var(--accent);
+      color: var(--black);
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 12px;
+    }
+
+    /* Главный баннер */
+    .hero {
+      height: 100vh;
+      background: url(/img/bg1.png) no-repeat center/cover;
+      display: flex;
+      align-items: center;
+      padding: 0 10%;
+      justify-content: center;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 600px;
+      margin-top: 550px;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      color: var(--white);
+      margin-bottom: 20px;
+      font-weight: 300;
+    }
+
+    .hero p {
+      color: var(--white);
+      margin-bottom: 30px;
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 30px;
+      background: var(--accent);
+      color: var(--black);
+      text-decoration: none;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background: var(--accent-light);
+    }
+
+    /* Слайдер товаров */
+    .products {
+      padding: 100px 10%;
+      text-align: center;
+      position: relative;
+    }
+
+    .section-title {
+      font-size: 32px;
+      margin-bottom: 50px;
+      font-weight: 300;
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    .slider-container {
+      position: relative;
+      margin: 40px 0;
+      overflow: hidden;
+    }
+
+    .slides {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+
+    .slide {
+      min-width: 300px;
+      margin-right: 20px;
+      background: var(--white);
+      border: 1px solid #eee;
+      padding: 20px;
+      text-align: left;
+      transition: transform 0.3s;
+    }
+
+    .slide:hover {
+      transform: translateY(-10px);
+    }
+
+    .slide img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      margin-bottom: 15px;
+    }
+
+    .slide h3 {
+      font-size: 18px;
+      margin-bottom: 10px;
+      font-weight: 400;
+    }
+
+    .slide p {
+      color: #666;
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
+
+    .slide .price {
+      font-size: 20px;
+      color: var(--black);
+      margin-bottom: 15px;
+      display: block;
+    }
+
+    .add-to-cart {
+      background: var(--black);
+      color: var(--white);
+      border: none;
+      padding: 8px 15px;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.3s;
+    }
+
+    .add-to-cart:hover {
+      background: #333;
+    }
+
+    .slider-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      z-index: 10;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .prev {
+      left: 10px;
+    }
+
+    .next {
+      right: 10px;
+    }
+
+    /* Партнёры */
+    .partners {
+      padding: 80px 10%;
+      background: var(--accent-light);
+      text-align: center;
+    }
+
+    .partners-grid {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 40px;
+      margin-top: 40px;
+    }
+
+    .partner-logo {
+      height: 60px;
+      filter: grayscale(100%);
+      opacity: 0.7;
+      transition: all 0.3s;
+    }
+
+    .partner-logo:hover {
+      filter: grayscale(0%);
+      opacity: 1;
+    }
+
+    /* Корзина */
+    .cart-modal {
+      position: fixed;
+      top: 0;
+      right: -400px;
+      width: 400px;
+      height: 100vh;
+      background: var(--white);
+      box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+      transition: right 0.3s;
+      z-index: 2000;
+      padding: 30px;
+      overflow-y: auto;
+    }
+
+    .cart-modal.active {
+      right: 0;
+    }
+
+    .cart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .close-cart {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .cart-items {
+      margin-bottom: 30px;
+    }
+
+    .cart-item {
+      display: flex;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .cart-item img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      margin-right: 15px;
+    }
+
+    .cart-item-info {
+      flex: 1;
+    }
+
+    .cart-item h4 {
+      font-size: 16px;
+      margin-bottom: 5px;
+      font-weight: 400;
+    }
+
+    .cart-item p {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 10px;
+    }
+
+    .remove-item {
+      background: none;
+      border: none;
+      color: #999;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .cart-total {
+      font-size: 18px;
+      margin-bottom: 20px;
+      text-align: right;
+    }
+
+    .checkout-btn {
+      width: 100%;
+      padding: 12px;
+      background: var(--black);
+      color: var(--white);
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .checkout-btn:hover {
+      background: #333;
+    }
+
+    /* Футер */
+    footer {
+      background: var(--black);
+      color: var(--white);
+      padding: 50px 10%;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    .footer-links a {
+      color: var(--white);
+      margin: 0 15px;
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent);
+    }
+
+    .copyright {
+      font-size: 14px;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+  <!-- Навигация -->
+  <header>
+    <a href="#" class="logo">LUMINOVA</a>
+    <nav>
+      <ul>
+        <li><a href="#home">Главная</a></li>
+        <li><a href="#products">Каталог</a></li>
+        <li><a href="#about">О нас</a></li>
+        <li><a href="#contact">Контакты</a></li>
+      </ul>
+    </nav>
+    <div class="cart-icon" onclick="toggleCart()">
+      🛒 <span class="cart-count">0</span>
+    </div>
+  </header>
+
+  <!-- Главный баннер -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <a href="#products" class="btn">Смотреть коллекцию</a>
+    </div>
+  </section>
+
+  <!-- Слайдер товаров -->
+  <section class="products" id="products">
+    <h2 class="section-title">Эксклюзивные коллекции</h2>
+    <div class="slider-container">
+      <button class="slider-btn prev" onclick="moveSlide(-1)">❮</button>
+      <div class="slides" id="slides">
+        <div class="slide">
+          <img src="/img/3ff82a96d5cbd6cf88ce0354932735b6.png" alt="Светильник 1">
+          <h3>Подвесной светильник «Orb»</h3>
+          <p>Минималистичный дизайн с технологией smart-lighting</p>
+          <span class="price">₽ 245 000</span>
+          <button class="add-to-cart" onclick="addToCart('Подвесной светильник «Orb»', 245000, this)">В корзину</button>
+        </div>
+        <div class="slide">
+          <img src="/img/48e27483f0d086210193cdf1fe27a2a7.png" alt="Светильник 2">
+          <h3>Настольная лампа «Nova»</h3>
+          <p>Итальянский мрамор и бронза, ручная сборка</p>
+          <span class="price">₽ 189 000</span>
+          <button class="add-to-cart" onclick="addToCart('Настольная лампа «Nova»', 189000, this)">В корзину</button>
+        </div>
+        <div class="slide">
+          <img src="/img/f36e89b95ead34e80d18f76c23d1f116.png" alt="Светильник 3">
+          <h3>LED-панель «Infinity»</h3>
+          <p>Бесконечные градиенты цвета, управление через приложение</p>
+          <span class="price">₽ 320 000</span>
+          <button class="add-to-cart" onclick="addToCart('LED-панель «Infinity»', 320000, this)">В корзину</button>
+        </div>
+      </div>
+      <button class="slider-btn next" onclick="moveSlide(1)">❯</button>
+    </div>
+  </section>
+
+  <!-- Партнёры -->
+  <section class="partners" id="about">
+    <h2 class="section-title">Наши партнёры</h2>
+    <div class="partners-grid">
+      <img src="/img/original.png" class="partner-logo" alt="FLOS">
+      <img src="/img/artem.png" class="partner-logo" alt="Artemide">
+      <img src="/img/bocci.png" class="partner-logo" alt="Bocci">
+      <img src="/img/louis poulsen.png" class="partner-logo" alt="Louis Poulsen">
+    </div>
+  </section>
+
+  <!-- Корзина -->
+  <div class="cart-modal" id="cartModal">
+    <div class="cart-header">
+      <h3>Ваша корзина</h3>
+      <button class="close-cart" onclick="toggleCart()">×</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <!-- Товары будут добавляться сюда -->
+    </div>
+    <div class="cart-total" id="cartTotal">
+      Итого: ₽ 0
+    </div>
+    <button class="checkout-btn">Оформить заказ</button>
+  </div>
+
+  <!-- Футер -->
+  <footer id="contact">
+    <div class="footer-links">
+      <a href="#">Конфиденциальность</a>
+      <a href="#">Условия использования</a>
+      <a href="#">Для дизайнеров</a>
+    </div>
+    <p class="copyright">© 2023 LUMINOVA. Все права защищены.</p>
+  </footer>
+
+  <script>
+    // Корзина
+    let cart = [];
+    const cartModal = document.getElementById('cartModal');
+    const cartItemsContainer = document.getElementById('cartItems');
+    const cartTotalElement = document.getElementById('cartTotal');
+    const cartCountElement = document.querySelector('.cart-count');
+
+    function toggleCart() {
+      cartModal.classList.toggle('active');
+    }
+
+    function addToCart(name, price, button) {
+      cart.push({ name, price });
+      updateCart();
+      button.textContent = 'Добавлено';
+      button.style.background = '#4CAF50';
+      setTimeout(() => {
+        button.textContent = 'В корзину';
+        button.style.background = 'var(--black)';
+      }, 2000);
+    }
+
+    function updateCart() {
+      cartItemsContainer.innerHTML = '';
+      let total = 0;
+
+      cart.forEach((item, index) => {
+        total += item.price;
+        const cartItemElement = document.createElement('div');
+        cartItemElement.className = 'cart-item';
+        cartItemElement.innerHTML = `
+          <img src="https://via.placeholder.com/80x80/EEE/999999?text=Light" alt="${item.name}">
+          <div class="cart-item-info">
+            <h4>${item.name}</h4>
+            <p>₽ ${item.price.toLocaleString()}</p>
+            <button class="remove-item" onclick="removeFromCart(${index})">Удалить</button>
+          </div>
+        `;
+        cartItemsContainer.appendChild(cartItemElement);
+      });
+
+      cartTotalElement.textContent = `Итого: ₽ ${total.toLocaleString()}`;
+      cartCountElement.textContent = cart.length;
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCart();
+    }
+
+    // Слайдер
+    let currentSlide = 0;
+    const slides = document.getElementById('slides');
+    const slideItems = document.querySelectorAll('.slide');
+    const totalSlides = slideItems.length;
+
+    function moveSlide(direction) {
+      currentSlide += direction;
+      if (currentSlide < 0) currentSlide = totalSlides - 1;
+      if (currentSlide >= totalSlides) currentSlide = 0;
+      slides.style.transform = `translateX(-${currentSlide * 320}px)`;
+    }
+
+    // Плавный скролл для навигации
+    document.querySelectorAll('nav a').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        targetElement.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    // Закрытие корзины при клике вне её области
+    document.addEventListener('click', (e) => {
+      if (!cartModal.contains(e.target) && !e.target.classList.contains('cart-icon') && !e.target.closest('.cart-icon')) {
+        cartModal.classList.remove('active');
+      }
+    });
+  </script>
+</body>
+</html>
